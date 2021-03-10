@@ -76,7 +76,7 @@ func (f *Flow) Start() {
 	}()
 }
 
-func (f *Flow) Row(n int) {
+func (f *Flow) Row(x interface{}) {
 	for {
 		if f.started {
 			break
@@ -88,7 +88,7 @@ func (f *Flow) Row(n int) {
 		time.Sleep(time.Second)
 	}
 
-	f.msgCh <- n
+	f.msgCh <- x
 }
 
 func newWorkerPool(n int, f *Flow) []*worker {
