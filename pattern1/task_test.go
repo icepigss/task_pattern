@@ -9,7 +9,7 @@ import (
 
 func TestFlow(t *testing.T) {
 	f := NewFlow(10)
-	f.SetWorkerFn(func(payload interface{}) interface{} {
+	f.SetWorkFn(func(payload interface{}) interface{} {
 		r := payload.(int)
 
 		fmt.Printf("worker runing, payload: %d.\n", r)
@@ -17,7 +17,7 @@ func TestFlow(t *testing.T) {
 
 		return r + 1
 	})
-	f.SetConsumerFn(func(payload interface{}) {
+	f.SetMergeFn(func(payload interface{}) {
 		r := payload.(int)
 
 		fmt.Printf("consumer runing, payload: %d.\n", r)

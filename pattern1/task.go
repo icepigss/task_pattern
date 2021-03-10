@@ -31,7 +31,7 @@ type Flow struct {
 
 	closeCh chan struct{}
 
-	workerFn func(interface{}) interface{}
+	workFn func(interface{}) interface{}
 
 	mergeFn func(interface{})
 
@@ -123,8 +123,8 @@ func (w *worker) workLoop(i int) {
 		case <-w.exitCh:
 			goto exit
 		case payload := <-w.f.msgCh:
-			if w.f.workerFn != nil {
-				w.f.m.submitCh <- w.f.workerFn(payload)
+			if w.f.workFn != nil {
+				w.f.m.submitCh <- w.f.workFn(payload)
 			}
 		}
 	}
@@ -186,10 +186,10 @@ exit:
 	m.f.wgM.Done()
 }
 
-func (f *Flow) SetWorkerFn(fn func(interface{}) interface{}) {
-	f.workerFn = fn
+func (f *Flow) SetWorkFn(fn func(interface{}) interface{}) {
+	f.workFn = fn
 }
 
-func (f *Flow) SetConsumerFn(fn func(interface{})) {
+func (f *Flow) SetMergeFn(fn func(interface{})) {
 	f.mergeFn = fn
 }
